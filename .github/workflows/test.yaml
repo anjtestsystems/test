@@ -5,7 +5,7 @@ on:
     inputs:
       environment:
         type: environment
-        required: true     
+        required: true
 
 jobs:
   abc:
@@ -15,21 +15,35 @@ jobs:
       run: echo "Job2 ${{ github.event.inputs.environment }} environment"
 
     - name: PrintA
-      run: echo "variable via shell environment - $env_varas"
+      run: echo "variable via shell environment - $env_var"
       env:
-        env_var: ${{ vars.MY_VAR }} # Defined in environment: stage   
-  
+        env_var: ${{ vars.MY_VAR }} # Defined in environment: stage
+
     - name: Printb
       run: echo "Var from environment - ${{ vars.MY_VAR }}"
 
+  pqr:
+    runs-on: ubuntu-latest
+    environment: 'dev'
+    steps:
+    - name: Display Input
+      run: echo "Job2 ${{ github.event.inputs.environment }} environment"
+
+    - name: PrintA
+      run: echo "variable via shell environment - $env_var"
+      env:
+        env_var: ${{ vars.MY_VAR }} # Defined in environment: stage
+
+    - name: Printb
+      run: echo "Var from environment - ${{ vars.MY_VAR }}"
 
   deploy:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
+    environment: ${{ github.event.inputs.environment }}
     steps:
 
     - name: Display Input
-      run: echo "Job2 ${{ github.event.inputs.environment }} environment"
+      run: echo "Job3 ${{ github.event.inputs.environment }} environment"
 
     - name: PrintA
       run: echo "variable via shell environment - $env_var"
