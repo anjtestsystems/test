@@ -15,7 +15,7 @@ jobs:
       run: echo "Job2 ${{ github.event.inputs.environment }} environment"
 
     - name: PrintA
-      run: echo "variable via shell environment : $env_var"
+      run: echo "variable via shell environment: $env_var"
       env:
         env_var: ${{ vars.MY_VAR }} # Defined in environment: stage
 
