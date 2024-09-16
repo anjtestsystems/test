@@ -14,10 +14,13 @@ jobs:
     - name: Display Input
       run: echo "Job2 ${{ github.event.inputs.environment }} environment"
 
+    - name: Display Input 2
+      run: echo "Job2 ${{ inputs.environment }} environment"
+
     - name: PrintA
       run: echo "variable via shell environment - $env_var"
       env:
-        env_var: ${{ vars.MY_VAR }} # Defined in environment: stage
+        env_var: ${{ vars.MY_VAR }} # Gets no value
 
     - name: Printb
       run: echo "Var from environment - ${{ vars.MY_VAR }}"
@@ -32,14 +35,14 @@ jobs:
     - name: PrintA
       run: echo "variable via shell environment - $env_var"
       env:
-        env_var: ${{ vars.MY_VAR }} # Defined in environment: stage
+        env_var: ${{ vars.MY_VAR }} # Even if selected stage, Gets value from dev
 
     - name: Printb
       run: echo "Var from environment - ${{ vars.MY_VAR }}"
 
   deploy:
     runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.environment }}
+    environment: ${{ inputs.environment }}
     steps:
 
     - name: Display Input
@@ -48,7 +51,7 @@ jobs:
     - name: PrintA
       run: echo "variable via shell environment - $env_var"
       env:
-        env_var: ${{ vars.MY_VAR }} # Defined in environment: stage
+        env_var: ${{ vars.MY_VAR }} # If selected stage, gets value from there
 
     - name: Printb
       run: echo "Var from environment - ${{ vars.MY_VAR }}"
