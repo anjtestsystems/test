@@ -1,0 +1,40 @@
+name: test_github_action
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+        required: true
+
+jobs:
+  abc:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Display Input
+      run: echo "Job2 ${{ github.event.inputs.environment }} environment"
+
+    - name: PrintA
+      run: echo "variable via shell environment : $env_var"
+      env:
+        env_var: ${{ vars.MY_VAR }} # Defined in environment: stage
+
+    - name: Printb
+      run: echo "Var from environment : ${{ vars.MY_VAR }}"
+
+
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+
+    - name: Display Input
+      run: echo "Job2 ${{ github.event.inputs.environment }} environment"
+
+    - name: PrintA
+      run: echo "variable via shell environment : $env_var"
+      env:
+        env_var: ${{ vars.MY_VAR }} # Defined in environment: stage
+
+    - name: Printb
+      run: echo "Var from environment : ${{ vars.MY_VAR }}"
